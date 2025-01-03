@@ -14,8 +14,8 @@ const instahyre = async () => {
 
   puppeteer
     .launch({
-      headless: false,
-      executablePath: `C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe`,
+      headless: true,
+      executablePath: '/usr/bin/google-chrome',
     })
     .then(async (browser) => {
       const page = await browser.newPage();
@@ -43,7 +43,7 @@ const instahyre = async () => {
       console.log("Clicked Show Results...");
       await page.click("button[id='show-results']");
 
-      // await page.waitForNavigation({ waitUntil: "networkidle0" });
+      // // await page.waitForNavigation({ waitUntil: "networkidle0" });
       await delay(4000);
 
       console.log("Clicked View Button...");
