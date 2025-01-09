@@ -1,5 +1,7 @@
 const { delay, clickButton } = require("./shared.utils.js");
 
+let retryCount = 0;
+
 const applyFilter = async (page) => {
   await clickButton(page, "li", "3 yr");
   await clickButton(page, "button", "Show results");
@@ -50,7 +52,12 @@ const startApplyingJobs = async (page) => {
     // await applyFilter(page);
     await applyJobsLoop(page);
   } catch (error) {
+    if (retryCount > 2) {
+      console.info("Retried 3 times, stopping...");
+      return;
+    }
     console.info("Error occurred:", error.message);
+    retryCount += 1;
     await page.reload({ waitUntil: "networkidle0" });
     await delay(3000);
     await applyJobs(page);
